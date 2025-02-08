@@ -6,7 +6,7 @@
 /*   By: omaezzem <omaezzem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 15:26:11 by omaezzem          #+#    #+#             */
-/*   Updated: 2025/02/05 11:57:59 by omaezzem         ###   ########.fr       */
+/*   Updated: 2025/02/08 11:29:33 by omaezzem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static	void	send_char(int pid, char c)
 			kill(pid, SIGUSR2);
 		else
 			kill(pid, SIGUSR1);
-		usleep(600);
+		usleep(250);
+		usleep(250);
 		i--;
 	}
 }
@@ -52,30 +53,33 @@ int	validate_pid(char *av_pid)
 	return (pid);
 }
 
-int main(int ac, char **av)
+void	ac_error(void)
 {
-    pid_t   pid;
-    int     i;
+	ft_putstr_fd(RED "Error: Invalid number of arguments.\n", 2);
+	ft_putstr_fd(RED "Usage: ./client <server_pid> <message>\n", 2);
+}
 
-    i = 0;
-    if (ac == 3 && av[2][0] != '\0')
-    {
+int	main(int ac, char **av)
+{
+	pid_t	pid;
+	int		i;
+
+	i = 0;
+	if (ac == 3 && av[2][0] != '\0')
+	{
 		pid = validate_pid(av[1]);
 		if (pid <= 0)
 		{
-    		ft_putstr_fd(RED "Invalid PID\n", 2);
-    		return (1);
+			ft_putstr_fd(RED "Invalid PID\n", 2);
+			return (1);
 		}
-        while (av[2][i] != '\0')
-        {
-            send_char(pid, av[2][i]);
-            i++;
-        }
-		send_char(pid,'\0');
-    }
-    else
-    {
-        ft_putstr_fd(RED "Error: Invalid number of arguments.\n", 2);
-        ft_putstr_fd(RED "Usage: ./client <server_pid> <message>\n", 2);
-    }
+		while (av[2][i] != '\0')
+		{
+			send_char(pid, av[2][i]);
+			i++;
+		}
+		send_char(pid, '\0');
+	}
+	else
+		ac_error();
 }

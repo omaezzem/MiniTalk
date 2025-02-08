@@ -6,7 +6,7 @@
 /*   By: omaezzem <omaezzem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 15:27:32 by omaezzem          #+#    #+#             */
-/*   Updated: 2025/01/31 16:47:58 by omaezzem         ###   ########.fr       */
+/*   Updated: 2025/02/08 11:32:04 by omaezzem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_atoi(const char *str)
 	while (str[i] && (str[i] >= '0' && str[i] <= '9'))
 	{
 		over = res;
-			res = (res * 10) + (str[i++] - '0');
+		res = (res * 10) + (str[i++] - '0');
 		if (over != (res / 10) && sign == 1)
 			return (-1);
 		if (over != (res / 10) && sign == -1)
@@ -68,7 +68,7 @@ void	ft_putnbr_fd(int n, int fd)
 	{
 		write (fd, "-2147483648", 11);
 	}
-	 if (n < 0)
+	if (n < 0)
 	{
 		ft_putchar_fd ('-', fd);
 		ft_putnbr_fd (-n, fd);

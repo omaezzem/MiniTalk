@@ -6,7 +6,7 @@
 /*   By: omaezzem <omaezzem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 15:23:46 by omaezzem          #+#    #+#             */
-/*   Updated: 2025/02/03 15:48:42 by omaezzem         ###   ########.fr       */
+/*   Updated: 2025/02/08 11:31:44 by omaezzem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,6 @@ static void	received_bit(int signal, siginfo_t *info, void *context)
 	static char	byte;
 	static int	previous_pid;
 
-	bits = 0;
-	byte = 0;
-	previous_pid = 0;
 	(void)context;
 	if (previous_pid != info->si_pid)
 	{
@@ -43,16 +40,13 @@ static void	received_bit(int signal, siginfo_t *info, void *context)
 	}
 }
 
-
-void action(void)
+void	action(void)
 {
 	struct sigaction	sig;
 
 	sigemptyset(&sig.sa_mask);
 	sig.sa_flags = SA_SIGINFO;
 	sig.sa_sigaction = received_bit;
-	sigaction(SIGUSR1, &sig, NULL);
-	sigaction(SIGUSR2, &sig, NULL);
 	if (sigaction(SIGUSR1, &sig, NULL) == -1
 		|| sigaction(SIGUSR2, &sig, NULL) == -1)
 		exit(1);
@@ -73,7 +67,7 @@ int	main(int ac, char **av)
 	ft_putstr_fd(YLW "PID->", 1);
 	ft_putnbr_fd(pid, 1);
 	write (1, "\n", 1);
-	ft_putstr_fd(GRAY "waiting for a message...\n",1);
+	ft_putstr_fd(GRAY "waiting for a message...\n", 1);
 	action();
 	while (1)
 		pause();
