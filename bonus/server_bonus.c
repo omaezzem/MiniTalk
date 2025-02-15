@@ -6,7 +6,7 @@
 /*   By: omaezzem <omaezzem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 09:33:04 by omaezzem          #+#    #+#             */
-/*   Updated: 2025/02/08 18:20:12 by omaezzem         ###   ########.fr       */
+/*   Updated: 2025/02/09 12:21:55 by omaezzem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,19 @@ int	check_uni_bytes(unsigned char c)
 
 int	process_char(int *bits, char *byte, int *cpid, int *pos)
 {
-	static unsigned char	utf8_buf[4];
-	static int				remaining;
+	static unsigned char	utf8_buffer[4];
+	static int				nbyte;
 
 	if (++(*bits) == 8)
 	{
 		if (*pos == 0)
-			remaining = check_uni_bytes(*byte);
-		utf8_buf[(*pos)++] = *byte;
-		if (--remaining == 0)
+			nbyte = check_uni_bytes(*byte);
+		utf8_buffer[(*pos)++] = *byte;
+		if (--nbyte == 0)
 		{
-			utf8_buf[*pos] = '\0';
-			ft_putstr_fd((char *)utf8_buf, 1);
+			utf8_buffer[*pos] = '\0';
+			ft_putstr_fd((char *)utf8_buffer, 1);
 			*pos = 0;
-			kill(*cpid, SIGUSR1);
 		}
 		if (*byte == '\0')
 		{
@@ -60,9 +59,6 @@ static void	received_bit(int signal, siginfo_t *info, void *context)
 	static int		pos;
 	static pid_t	cpid;
 
-	bits = 0;
-	byte = 0;
-	pos = 0;
 	(void)context;
 	if (cpid != info->si_pid)
 	{

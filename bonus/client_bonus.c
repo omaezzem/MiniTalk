@@ -6,7 +6,7 @@
 /*   By: omaezzem <omaezzem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:15:05 by omaezzem          #+#    #+#             */
-/*   Updated: 2025/02/08 18:19:33 by omaezzem         ###   ########.fr       */
+/*   Updated: 2025/02/08 20:42:32 by omaezzem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 void	ack_received(int sig)
 {
-	(void)sig;
+	if (sig == SIGUSR2)
+		ft_putstr_fd(GRN "Message sent successfully ✅\n", 1);
 }
 
-static void	send_char(int pid, char c)
+void	send_char(int pid, char c)
 {
 	int	i;
 
@@ -69,7 +70,6 @@ int	main(int ac, char **av)
 	pid_t	pid;
 	int		i;
 
-	signal (SIGUSR1, ack_received);
 	signal (SIGUSR2, ack_received);
 	if (ac == 3 && av[2][0] != '\0')
 	{
@@ -86,7 +86,6 @@ int	main(int ac, char **av)
 			i++;
 		}
 		send_char(pid, '\0');
-		ft_putstr_fd(GRN "Message sent successfully ✅\n", 1);
 	}
 	else
 		ac_error();

@@ -6,7 +6,7 @@
 /*   By: omaezzem <omaezzem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 10:32:22 by omaezzem          #+#    #+#             */
-/*   Updated: 2025/02/08 11:24:43 by omaezzem         ###   ########.fr       */
+/*   Updated: 2025/02/09 12:15:57 by omaezzem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-# define PUR "\033[0;35m"
 # define CY "\033[0;36m"
 # define RED "\033[0;31m"
 # define GRN "\033[0;32m"
